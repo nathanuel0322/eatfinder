@@ -2,7 +2,8 @@ import './db.mjs';
 // import dotenv using import
 // import dotenv from 'dotenv-vault-core';
 // dotenv.config();
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
+import mongodb from 'mongodb';
 import express from 'express'
 import fetch from 'node-fetch';
 import cors from 'cors';
