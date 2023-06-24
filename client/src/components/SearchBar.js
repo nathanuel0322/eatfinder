@@ -48,7 +48,7 @@ export default function SearchBar({setBusinesses}) {
             })
             .catch((err) => {
                 console.log("err from search:", err)
-                alert("Error from search:", err, "please try again");
+                alert("Error from search:", err, "please try again")
             })
             .finally(() => {
                 searchButton.innerText = "Search";
