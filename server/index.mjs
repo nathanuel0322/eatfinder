@@ -2,8 +2,7 @@ import './db.mjs';
 // import dotenv using import
 // import dotenv from 'dotenv-vault-core';
 // dotenv.config();
-// import mongoose from 'mongoose';
-import mongodb from 'mongodb';
+import mongoose from 'mongoose';
 import express from 'express'
 import fetch from 'node-fetch';
 import cors from 'cors';
@@ -14,8 +13,8 @@ app.use(cors({
     credentials: true,
     origin: '*'
 }))
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
