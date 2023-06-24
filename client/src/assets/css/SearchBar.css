@@ -1,0 +1,22 @@
+.SearchBar-fields {
+  padding: .66rem 1rem;
+  border-radius: 4px;
+  font-size: .77rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.SearchBar-submit {
+  border-radius: 4px;
+  padding: .72rem 1.7rem;
+  background-color: #cca353 !important;
+  font-weight: 600;
+  transition: background-color .5s;
+}
+
+.SearchBar-submit :hover {
+  cursor: pointer;
+  background-color: #a7874b;
+}

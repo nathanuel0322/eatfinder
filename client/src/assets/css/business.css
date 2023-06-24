@@ -1,0 +1,17 @@
+h2 {
+  font-family: 'Chau Philomene One', sans-serif;
+}
+
+.Business-information p {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.reviewbutton {
+  background-color: blue;
+  border-radius: 8px;
+  width: 60%;
+  margin: 5% auto;
+  color: white;
+  padding: 2%;
+}

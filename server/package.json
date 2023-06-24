@@ -1,0 +1,53 @@
+{
+  "name": "eatfinder-backend",
+  "version": "1.0.0",
+  "description": "Nathanuel Dixon's Final Project",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-csci-ua-0467-001-002-fall-2022/final-project-nathanuel0322.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyu-csci-ua-0467-001-002-fall-2022/final-project-nathanuel0322/issues"
+  },
+  "homepage": ".",
+  "dependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.0",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "mongodb": "5.6",
+    "mongoose": "^6.7.0",
+    "mongoose-slug-plugin": "^2.1.0",
+    "node-fetch": "^3.2.10",
+    "path": "^0.12.7",
+    "react": "^18.2.0",
+    "url": "^0.11.0",
+    "web-vitals": "^2.1.4"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

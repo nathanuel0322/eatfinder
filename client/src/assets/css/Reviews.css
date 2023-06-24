@@ -1,0 +1,28 @@
+input {
+    color: black;
+    text-align: center;
+}
+
+label {
+    text-decoration: underline;
+    font-size: 1.25rem;
+}
+
+.submit, #backtohome {
+    text-align: center;
+    border-radius: 4px;
+    padding: .72rem 1.7rem;
+    background-color: darkorange !important;
+    color: #ffffff;
+    font-weight: 600;
+    transition: background-color .5s;
+}
+
+.submit:hover, #backtohome:hover {
+    cursor: pointer;
+    background-color: #a7874b;
+}
+#thanksdiv {
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 125%;
+}
