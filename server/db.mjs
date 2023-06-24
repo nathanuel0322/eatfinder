@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv-vault-core';
 dotenv.config();
 import mongoose from 'mongoose';
 import mongooseSlugPlugin from 'mongoose-slug-plugin';

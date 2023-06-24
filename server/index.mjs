@@ -1,8 +1,6 @@
 import './db.mjs';
 // import dotenv using import
-import dotenv from 'dotenv';
-
-// use dotenv to load variables from .env
+import dotenv from 'dotenv-vault-core';
 dotenv.config();
 import mongoose from 'mongoose';
 import express from 'express'
