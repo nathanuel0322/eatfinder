@@ -1,7 +1,7 @@
 import './db.mjs';
 // import dotenv using import
-import dotenv from 'dotenv-vault-core';
-dotenv.config();
+// import dotenv from 'dotenv-vault-core';
+// dotenv.config();
 import mongoose from 'mongoose';
 import express from 'express'
 import fetch from 'node-fetch';

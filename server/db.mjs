@@ -1,5 +1,5 @@
-import dotenv from 'dotenv-vault-core';
-dotenv.config();
+// import dotenv from 'dotenv-vault-core';
+// dotenv.config();
 import mongoose from 'mongoose';
 import mongooseSlugPlugin from 'mongoose-slug-plugin';
 const CONNECTION_STRING = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URL : "mongodb://127.0.0.1:27017/eatfinder";
