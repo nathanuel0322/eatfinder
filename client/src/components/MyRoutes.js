@@ -7,7 +7,8 @@ import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import SignupScreen from '../screens/SignUpScreen';
 import Home from '../screens/Home';
 import Reviews from '../screens/Reviews';
-export const fetchlink = process.env.NODE_ENV === 'production ' ? '' : 'http://localhost:3001'
+export const fetchlink = process.env.NODE_ENV === 'production' ? 'https://eatfinder.onrender.com/' : 'http://localhost:3001'
+console.log("fetchlink: ", fetchlink)
 
 export default function MyRoutes() {
   const {user, setUser, logout} = useContext(AuthContext);
