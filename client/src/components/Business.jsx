@@ -1,19 +1,17 @@
-import '../assets/css/business.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../assets/css/business.css';
 
 export default function Business({business}) {
   return (
     <div className="flex flex-col justify-center w-64 mt-0 mx-2 mb-9">
-      <div>
-        <a href={business.url} target="_blank" rel="noreferrer">
+      <a href={business.url} target="_blank" rel="noreferrer" className='relative businesslink'>
         <img
-          className='max-w-full max-h-full'
+          className='max-w-full max-h-full rounded-lg'
           src={business.imageSrc ? business.imageSrc : "https://th.bing.com/th/id/R.e5cb296b866f6594cd02ffae9b4c5fde?rik=buYJcX5y%2fBpZvw&riu=http%3a%2f%2fwww.spottedbylocals.com%2fwp-content%2fuploads%2fiStock_72490647_MEDIUM.jpg&ehk=Erd8WH0xHBXWAGawsoJF4q3QPPTtBgp1IiW2Gu8XAp0%3d&risl=&pid=ImgRaw&r=0"} 
           alt={business.name}
         />
-        </a>
-      </div>
+      </a>
       <h2 className='self-center text-3xl my-2'>{business.name}</h2>
       <div className="Business-information flex justify-between">
         <div>
@@ -35,7 +33,7 @@ export default function Business({business}) {
           <p>{business.reviewCount} reviews</p>
         </div>
       </div>
-      <Link to={`/${business.slug}`} style={{display: 'flex'}}><button className="reviewbutton">Leave a Review</button></Link>
+      <Link to={`/${business.slug}`} className="reviewbutton text-center rounded-lg w-3/5 text-white">Leave a Review</Link>
       {business.reviews.length !== 0 && 
         <div className='flex flex-col items-center gap-y-1'>
           <p style={{backgroundColor: 'darkorange'}} className='w-40 p-1 text-center rounded-lg'>EatFinder Reviews</p>

@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import '../assets/css/SearchBar.css';
 import { fetchlink } from './MyRoutes';
 
 export default function SearchBar({setBusinesses}) {
     const [term, setTerm] = useState('');
     const [location, setLocation] = useState('');
+    const [searchclicked, setSearchClicked] = useState(false);
 
     const handleTermChange = (e) => {
         // if there is an 's' at the end of the word, remove it
@@ -24,36 +25,36 @@ export default function SearchBar({setBusinesses}) {
         setLocation(e.target.value);
     }
 
+    useEffect(() => {
+        if (searchclicked) {
+            fetch(`${fetchlink}/display`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ term, location })
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    console.log("data from search:", data);
+                    if (data.length === 0) {
+                        setBusinesses('No businesses found');
+                    }
+                    else {
+                        const termMatch = data.filter((biz) => biz.name.toLowerCase().includes(term.toLowerCase()));
+                        setBusinesses(termMatch.length > 0 ? termMatch : "No businesses found");
+                    }
+                })
+                .catch((err) => {
+                    console.log("err from search:", err)
+                    alert("Error from search:", err, "please try again")
+                })
+                .finally(() => {
+                    setSearchClicked(false)
+                })
+        }
+    }, [searchclicked])
+
     const handleSearch = (e) => {
         e.preventDefault();
-        const searchButton = document.querySelector('.SearchBar-submit');
-        searchButton.innerText = "Searching...";
-        searchButton.disabled = true;
-
-        fetch(`${fetchlink}/display`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ term, location })
-        })
-            .then(res => res.json())
-            .then((data) => {
-                console.log("data from search:", data);
-                if (data.length === 0) {
-                    setBusinesses('No businesses found');
-                }
-                else {
-                    const termMatch = data.filter((biz) => biz.name.toLowerCase().includes(term.toLowerCase()));
-                    setBusinesses(termMatch.length > 0 ? termMatch : "No businesses found");
-                }
-            })
-            .catch((err) => {
-                console.log("err from search:", err)
-                alert("Error from search:", err, "please try again")
-            })
-            .finally(() => {
-                searchButton.innerText = "Search";
-                searchButton.disabled = false;
-            })
 
     }
 
@@ -62,7 +63,11 @@ export default function SearchBar({setBusinesses}) {
             <form className="flex mb-7 flex-col items-center" onSubmit={handleSearch}>
                 <input className="SearchBar-fields" type="text" placeholder='Search Restaurants' onChange={handleTermChange} />
                 <input className="SearchBar-fields" type="text" placeholder='Where?' onChange={handleLocationChange} />
-                <button className="SearchBar-submit" type="submit">Search</button>
+                <button className="SearchBar-submit" type="submit" onClick={() => setSearchClicked(!searchclicked)}
+                    disabled={searchclicked}
+                >
+                    {searchclicked ? "Searching..." : "Search"}
+                </button>
             </form>
         </div>
     )

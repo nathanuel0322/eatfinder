@@ -1,17 +1,31 @@
 h2 {
   font-family: 'Chau Philomene One', sans-serif;
 }
-
 .Business-information p {
   font-size: 1rem;
   font-weight: 400;
 }
-
 .reviewbutton {
   background-color: blue;
-  border-radius: 8px;
-  width: 60%;
   margin: 5% auto;
-  color: white;
   padding: 2%;
+  transition: all .3s;
+}
+.reviewbutton:hover {
+  background-color: dodgerblue;
+}
+.businesslink::before {
+  content: "";
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: hsla(60,7.462686567164193%,86.86274509803921%, 0.75);
+  opacity: 0;
+  transition: all .3s;
+  border-radius: 8px;
+}
+.businesslink:hover::before {
+  opacity: 0.5;
 }

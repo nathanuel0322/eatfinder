@@ -1,7 +1,6 @@
 import './db.mjs';
-// import dotenv using import
-// import dotenv from 'dotenv-vault-core';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 import mongoose from 'mongoose';
 import express from 'express'
 import fetch from 'node-fetch';
@@ -33,34 +32,39 @@ app.post('/display', async (req, res) => {
     )
         .then((resp) => resp.json())
         .then(async (respJson) => {
-            if (respJson.businesses.length > 0) {
-                for (const business of respJson.businesses) {
-                    try {
-                        const isRestaurant = await Restaurant.findOne({ id: business.id });
-                        if (!isRestaurant) {
-                            const restaurant = new Restaurant({
-                                id: business.id,
-                                name: business.name,
-                                url: business.url,
-                                imageSrc: business.image_url,
-                                address: business.location.address1,
-                                city: business.location.city,
-                                state: business.location.state,
-                                zipCode: business.location.zipCode,
-                                category: business.categories[0].title,
-                                rating: business.rating,
-                                reviewCount: business.review_count
-                            })
-                            await restaurant.save();
-                        }
-                    } catch (err) {
-                        console.log(err);
-                    }
-                }
-                res.json(await Restaurant.find({}));
-
+            console.log("resphjson:", respJson);
+            if (respJson.error) {
+                res.json([])
             } else {
-                res.json([]);
+                if (respJson.businesses.length > 0) {
+                    for (const business of respJson.businesses) {
+                        try {
+                            const isRestaurant = await Restaurant.findOne({ id: business.id });
+                            if (!isRestaurant) {
+                                const restaurant = new Restaurant({
+                                    id: business.id,
+                                    name: business.name,
+                                    url: business.url,
+                                    imageSrc: business.image_url,
+                                    address: business.location.address1,
+                                    city: business.location.city,
+                                    state: business.location.state,
+                                    zipCode: business.location.zipCode,
+                                    category: business.categories[0].title,
+                                    rating: business.rating,
+                                    reviewCount: business.review_count
+                                })
+                                await restaurant.save();
+                            }
+                        } catch (err) {
+                            console.log(err);
+                        }
+                    }
+                    res.json(await Restaurant.find({}));
+
+                } else {
+                    res.json([]);
+                }
             }
         })
 })
