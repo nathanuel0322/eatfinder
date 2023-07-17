@@ -19,7 +19,7 @@ const RestaurantSchema = new mongoose.Schema({
   rating: {type: Number},
   reviewCount: {type: Number},
   reviews: [{ type: mongoose.Schema.Types.Array, ref: 'Review' }],
-});
+}, { timestamps: true });
 
 // a review schema
 // * every review has various essential information in reference to the review
@@ -28,7 +28,7 @@ const ReviewSchema = new mongoose.Schema({
   title: {type: String, required: true},
   rating: {type: Number, required: true},
   text: {type: String, required: true},
-});
+}, { timestamps: true });
 
 RestaurantSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=name%>' });
 

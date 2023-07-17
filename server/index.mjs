@@ -5,6 +5,9 @@ import mongoose from 'mongoose';
 import express from 'express'
 import fetch from 'node-fetch';
 import cors from 'cors';
+import moment from 'moment';
+
+
 
 const app = express();
 
@@ -24,6 +27,27 @@ app.use((req, res, next) => {
 const Restaurant = mongoose.model("Restaurant");
 const Review = mongoose.model("Review");
 
+async function addTimestampsToExistingDocuments() {
+  try {
+    // Get all the existing documents from the collection
+    const restaurants = await Restaurant.find({});
+
+    // Loop through each document and update the 'updatedAt' field with the current timestamp
+    for (const restaurant of restaurants) {
+      restaurant.updatedAt = moment().toDate(); // Set 'updatedAt' to the current date
+      await restaurant.save(); // Save the updated document back to the database
+    }
+
+    console.log('Timestamps added to all documents successfully.');
+
+  } catch (error) {
+    console.error('Error adding timestamps:', error);
+  }
+}
+
+// Call the function to start the process
+await addTimestampsToExistingDocuments();
+
 app.post('/display', async (req, res) => {
     const { term, location } = req.body;
     const ouryelp = process.env.YELP_API_KEY;
@@ -32,7 +56,8 @@ app.post('/display', async (req, res) => {
     )
         .then((resp) => resp.json())
         .then(async (respJson) => {
-            console.log("resphjson:", respJson);
+            let docarr = []
+            console.log("respjson:", respJson);
             if (respJson.error) {
                 res.json([])
             } else {
@@ -60,8 +85,7 @@ app.post('/display', async (req, res) => {
                             console.log(err);
                         }
                     }
-                    res.json(await Restaurant.find({}));
-
+                    res.json(await Restaurant.find({}).sort({ updatedAt: -1 }));
                 } else {
                     res.json([]);
                 }
@@ -84,5 +108,6 @@ app.post('/reviews/:slug', (req, res) => {
         }
     })
 })
+
 
 app.listen(process.env.PORT || 3001);

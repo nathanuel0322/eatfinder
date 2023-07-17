@@ -37,8 +37,7 @@ export default function SearchBar({setBusinesses}) {
                     console.log("data from search:", data);
                     if (data.length === 0) {
                         setBusinesses('No businesses found');
-                    }
-                    else {
+                    } else {
                         const termMatch = data.filter((biz) => biz.name.toLowerCase().includes(term.toLowerCase()));
                         setBusinesses(termMatch.length > 0 ? termMatch : "No businesses found");
                     }
@@ -55,7 +54,6 @@ export default function SearchBar({setBusinesses}) {
 
     const handleSearch = (e) => {
         e.preventDefault();
-
     }
 
     return (
