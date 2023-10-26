@@ -30,7 +30,7 @@ export default function LoginScreen() {
   }
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center' id='login-form'>
       <h1 className='text-center text-3xl my-8' style={{fontFamily: "'Monoton', cursive'"}}>Login</h1>
       <form onSubmit={(e) => {
         e.preventDefault();

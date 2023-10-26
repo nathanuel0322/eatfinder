@@ -21,6 +21,8 @@ const RestaurantSchema = new mongoose.Schema({
   reviews: [{ type: mongoose.Schema.Types.Array, ref: 'Review' }],
 }, { timestamps: true });
 
+// one -- many
+
 // a review schema
 // * every review has various essential information in reference to the review
 const ReviewSchema = new mongoose.Schema({
@@ -30,6 +32,7 @@ const ReviewSchema = new mongoose.Schema({
   text: {type: String, required: true},
 }, { timestamps: true });
 
+// slugs leave behind trails, mcdonalds, mcdonalds-2, /restaurant/mcdonalds-2 
 RestaurantSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=name%>' });
 
 mongoose.model('Review', ReviewSchema);

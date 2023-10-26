@@ -11,7 +11,7 @@ const SignupScreen = () => {
   const navigate = useNavigate();
 
   return(
-    <div style={styles.container}>
+    <div style={styles.container} id='login-form'>
       <h1 className='text-center text-3xl my-8' style={{fontFamily: "'Monoton', cursive'"}}>Register</h1>
       <form onSubmit={(e) => {
         e.preventDefault();
