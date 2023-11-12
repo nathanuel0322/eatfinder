@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import '../assets/css/SearchBar.css';
 import { fetchlink } from './MyRoutes';
+import toast from 'react-hot-toast';
 
 export default function SearchBar({setBusinesses}) {
     const [term, setTerm] = useState('');
@@ -27,28 +28,48 @@ export default function SearchBar({setBusinesses}) {
 
     useEffect(() => {
         if (searchclicked) {
-            fetch(`${fetchlink}/display`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ term, location })
-            })
-                .then(res => res.json())
-                .then((data) => {
-                    console.log("data from search:", data);
-                    if (data.length === 0) {
-                        setBusinesses('No businesses found');
-                    } else {
-                        const termMatch = data.filter((biz) => biz.name.toLowerCase().includes(term.toLowerCase()));
-                        setBusinesses(termMatch.length > 0 ? termMatch : "No businesses found");
-                    }
+            toast.promise(
+                fetch(`${fetchlink}/display`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ term, location })
                 })
-                .catch((err) => {
-                    console.log("err from search:", err)
-                    alert("Error from search:", err, "please try again")
-                })
-                .finally(() => {
-                    setSearchClicked(false)
-                })
+                    .then(res => res.json())
+                    .then((data) => {
+                        console.log("data from search:", data);
+                        if (data.length === 0) {
+                            setBusinesses('No businesses found');
+                        } else {
+                            const termMatch = data.filter((biz) => biz.name.toLowerCase().includes(term.toLowerCase()));
+                            setBusinesses(termMatch.length > 0 ? termMatch : "No businesses found");
+                        }
+
+                        return true;
+                    })
+                    .catch((err) => {
+                        console.error("err from search:", err)
+                        throw err;
+                    })
+                    .finally(() => {
+                        setSearchClicked(false)
+                    }),
+                {
+                    loading: 'Searching',
+                    success: 'Done!',
+                    error: (err) => `Something went wrong: ${err.toString()}`,
+                },
+                {
+                    position: 'top-center',
+                    style: {
+                        background: '#61d345',
+                        color: '#fff',
+                    },
+                    iconTheme: {
+                        primary: '#fff',
+                        secondary: '#61d345',
+                    },
+                }
+            );
         }
     }, [searchclicked])
 
@@ -64,7 +85,7 @@ export default function SearchBar({setBusinesses}) {
                 <button className="SearchBar-submit" type="submit" onClick={() => setSearchClicked(!searchclicked)}
                     disabled={searchclicked}
                 >
-                    {searchclicked ? "Searching..." : "Search"}
+                    Search
                 </button>
             </form>
         </div>

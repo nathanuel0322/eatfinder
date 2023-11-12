@@ -5,7 +5,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase';
 import Stylesheet from "reactjs-stylesheet";
 import { useNavigate } from 'react-router-dom';
-import { toastError } from '../GlobalFunctions';
+import { toastError, toastSuccess } from '../GlobalFunctions';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState();
@@ -17,10 +17,9 @@ export default function LoginScreen() {
     await sendPasswordResetEmail(auth, email)
       .then(() => {
         if (email.includes('@') && email.includes('.com')) {
-          alert("Your password reset has been sent to your email")
-        }
-        else{
-          alert("Please enter a valid email.")
+          toastSuccess('Password reset email sent!');
+        } else {
+          toastError('Please enter a valid email address!');
         }
       })
       .catch(e => {
@@ -44,8 +43,8 @@ export default function LoginScreen() {
         <input style={styles.input} type="password" name="password" id="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
         <button style={styles.buttons} type="submit">Sign In</button>
       </form>
-      <button style={Object.assign({}, styles.buttons, {backgroundColor: 'crimson'})} onClick={() => handlePasswordReset()}>Forgot Password?</button>
-      <button style={Object.assign({}, styles.buttons, {backgroundColor: 'green'})} onClick={() => navigate('/signup')}>Don't have an account? Sign Up</button>
+      <button style={{...styles.buttons, backgroundColor: 'crimson'}} onClick={() => handlePasswordReset()}>Forgot Password?</button>
+      <button style={{...styles.buttons, backgroundColor: 'green'}} onClick={() => navigate('/signup')}>Don't have an account? Sign Up</button>
     </div>
   );
 }

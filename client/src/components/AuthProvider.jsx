@@ -37,6 +37,9 @@ export const AuthProvider = ({children}) => {
             if (error.code === 'auth/missing-password') {
               toastError('Please enter a password!');
             }
+            if (error.code === 'auth/invalid-login-credentials') {
+              toastError('Invalid login credentials!');
+            }
             console.error(error);
           });
         },
