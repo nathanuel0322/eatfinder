@@ -5,6 +5,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase';
 import Stylesheet from "reactjs-stylesheet";
 import { useNavigate } from 'react-router-dom';
+import { toastError } from '../GlobalFunctions';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState();
@@ -23,9 +24,10 @@ export default function LoginScreen() {
         }
       })
       .catch(e => {
-        if (e.code === 'auth/invalid-email'){
-          alert("Please enter a valid email.")
+        if (e.code === 'auth/configuration-not-found') {
+          toastError('No account found with that email address!');
         }
+        console.error(e);
       })
   }
 

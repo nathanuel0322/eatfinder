@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import { AuthContext } from '../components/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import Stylesheet from 'reactjs-stylesheet';
+import { toastError } from '../GlobalFunctions';
 
 const SignupScreen = () => {
   const [email, setEmail] = useState();
@@ -13,37 +14,32 @@ const SignupScreen = () => {
   return(
     <div style={styles.container} id='login-form'>
       <h1 className='text-center text-3xl my-8' style={{fontFamily: "'Monoton', cursive'"}}>Register</h1>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        if (password === confirmPassword){
-          register(email, password, confirmPassword)
-            .then(() => navigate('/'))
-            .catch(e => {
-              if (e.code === 'auth/email-already-in-use'){
-                alert("This email is already in use.")
-              }
-              else if (e.code === 'auth/invalid-email'){
-                alert("Please enter a valid email.")
-              }
-              else if (e.code === 'auth/weak-password'){
-                alert("Please enter a stronger password.")
-              }
-            })
-        }
-        else {
-          alert("Passwords do not match.")
-        }
-      }}
-      style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}
-      >
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
         <input style={styles.input} className='w-64' type="email" name="email" id="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
         <input style={styles.input} type="password" name="password" id="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
         <input style={styles.input} type="password" name="confirmPassword" id="confirmPassword" placeholder='Confirm Password' value={confirmPassword} 
           onChange={(e) => setConfirmPassword(e.target.value)} 
         />
-        <button style={Object.assign({}, styles.buttons, {padding: '0.5rem'})} type="submit">Sign Up</button>
-      </form>
-      <button style={Object.assign({}, styles.buttons, {backgroundColor: 'navy'})} onClick={() => navigate('/')}>Already have an account? Login</button>
+        <button style={Object.assign({}, styles.buttons, {padding: '0.5rem'})} onClick={async () => {
+          if (!email || !password || !confirmPassword) {
+            toastError('Please fill out all fields!')
+          } else {
+            if (password === confirmPassword) {
+              const regsuccess = await register(email, password, confirmPassword)
+              if (regsuccess) {
+                navigate('/')
+              }
+            } else {
+              toastError('Make sure your passwords match!')
+            }
+          }
+        }}>
+          Sign Up
+        </button>
+      </div>
+      <button style={Object.assign({}, styles.buttons, {backgroundColor: 'navy'})} onClick={() => navigate('/')}>
+        Already have an account? Login
+      </button>
     </div>
   );
 };
