@@ -25,6 +25,8 @@ export default function LoginScreen() {
       .catch(e => {
         if (e.code === 'auth/configuration-not-found') {
           toastError('No account found with that email address!');
+        } else if (e.code === 'auth/missing-email') {
+          toastError('Please enter an email address!');
         }
         console.error(e);
       })
